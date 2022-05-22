@@ -6,11 +6,17 @@ import com.borodulin.spring_boot_rest_auth.execption.InvalidCredentials;
 import com.borodulin.spring_boot_rest_auth.execption.UnauthorizedUser;
 import com.borodulin.spring_boot_rest_auth.model.User;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@Validated
 @RestController
 public class AuthorizationController {
 
@@ -33,10 +39,9 @@ public class AuthorizationController {
         return e.getLocalizedMessage();
     }
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.I_AM_A_TEAPOT) // XD
-    @ResponseBody
-    private String handleUnauthorizedUser(Exception e) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public String handleValidationExceptions(MethodArgumentNotValidException e) {
         return e.getLocalizedMessage();
     }
     //</editor-fold>

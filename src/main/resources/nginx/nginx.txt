@@ -1,0 +1,17 @@
+http {
+    server {
+        listen       80;
+        server_name  localhost;
+
+        location / {
+            proxy_pass http://localhost:8080;
+            root  html;
+            index index.html index.htm;
+        }
+
+       location /signin {
+           proxy_pass http://localhost:8080;
+           rewrite /signin /signin.html break;
+       }
+    }
+}

@@ -25,6 +25,11 @@ public class AuthorizationController {
         return user.getPermissions();
     }
 
+    @GetMapping("/free")
+    public String getAuthorities() {
+        return "Нет ограничений";
+    }
+
     //<editor-fold desc="handleException">
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidCredentials.class)
